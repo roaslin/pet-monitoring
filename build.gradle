@@ -18,4 +18,7 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     compileOnly 'org.projectlombok:lombok:1.18.8'
     annotationProcessor 'org.projectlombok:lombok:1.18.8'
+    compile "org.springframework.boot:spring-boot-starter-actuator"
+    compile group: 'org.yaml', name: 'snakeyaml', version: '1.24'
+    compile 'io.micrometer:micrometer-registry-prometheus'
 }
