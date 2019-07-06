@@ -8,3 +8,4 @@ Decision
 We will use Architecture Decision Records, as described by Michael Nygard.
 
 Consequences
+
