@@ -3,7 +3,6 @@ plugins {
     id 'java'
 }
 
-apply plugin: 'io.spring.dependency-management'
 
 group = 'com.pets'
 version = '1.0-SNAPSHOT'
@@ -22,3 +21,5 @@ dependencies {
     compile group: 'org.yaml', name: 'snakeyaml', version: '1.24'
     compile 'io.micrometer:micrometer-registry-prometheus'
 }
+
+apply plugin: 'io.spring.dependency-management'
