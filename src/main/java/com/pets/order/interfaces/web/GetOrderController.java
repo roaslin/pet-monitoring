@@ -1,6 +1,6 @@
 package com.pets.order.interfaces.web;
 
-import io.micrometer.core.annotation.Timed;
+import io.prometheus.client.Histogram;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -9,8 +9,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class GetOrderController {
 
+    static final Histogram histogram = Histogram.build()
+            .name("get_orders_request_latency")
+            .help("Get orders request latency")
+            .register();
 
-    @Timed(value = "get_orders")
     @GetMapping("/orders")
     public void getOrders() {
 
@@ -18,10 +21,14 @@ public class GetOrderController {
         long rightLimit = 1000L;
         long latency = leftLimit + (long) (Math.random() * (rightLimit - leftLimit));
 
+        Histogram.Timer histogramTimer = histogram.startTimer();
         try {
+
             Thread.sleep(latency);
         } catch (InterruptedException e) {
             log.error("Responding orders" + e.getMessage());
+        } finally {
+            histogramTimer.observeDuration();
         }
 
         log.info("Responding orders latency [" + latency + "]");
