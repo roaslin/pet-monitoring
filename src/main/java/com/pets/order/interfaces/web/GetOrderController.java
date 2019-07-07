@@ -1,18 +1,16 @@
 package com.pets.order.interfaces.web;
 
+import io.micrometer.core.annotation.Timed;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.actuate.endpoint.annotation.ReadOperation;
-import org.springframework.boot.actuate.endpoint.web.annotation.WebEndpoint;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@WebEndpoint(id = "orders")
 @Slf4j
 @RestController
 public class GetOrderController {
 
 
-    @ReadOperation
+    @Timed(value = "get_orders")
     @GetMapping("/orders")
     public void getOrders() {
 
