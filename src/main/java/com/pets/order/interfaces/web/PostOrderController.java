@@ -1,5 +1,6 @@
 package com.pets.order.interfaces.web;
 
+import io.prometheus.client.CollectorRegistry;
 import io.prometheus.client.Histogram;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,10 +11,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class PostOrderController {
 
-    static final Histogram requestLatency = Histogram.build()
-            .name("post_orders_request_latency")
-            .help("Post orders request latency")
-            .register();
+    private final Histogram requestLatency;
+
+
+    public PostOrderController(CollectorRegistry collectorRegistry) {
+
+        this.requestLatency = Histogram.build()
+                .name("post_orders_request_latency")
+                .help("Post orders request latency")
+                .register(collectorRegistry);
+    }
 
     @PostMapping("orders")
     public void postOrder(@RequestBody OrderCommand newOrder) {
